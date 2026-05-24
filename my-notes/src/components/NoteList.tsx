@@ -1,4 +1,5 @@
 import type { Note } from "../model/Note"
+import ListCard from "./ListCard";
 
 type NoteListProps = {
     listNotes: Note[];
@@ -6,14 +7,13 @@ type NoteListProps = {
 }
 
 export default function NoteList({ listNotes, setNotesList } : NoteListProps) {
+
+    const handleDelete = (idToDelete: string) => {
+        const updatedNotes = listNotes.filter(listNote => listNote.id !== idToDelete);
+        setNotesList(updatedNotes);
+    }
+
     return (
-        <ul>
-            {listNotes.map((listNote) => (
-                <li key={listNote.id}>
-                    <p>{listNote.title}</p>
-                    <p>{listNote.body}</p>
-                </li>
-            ))}
-        </ul>
+        <ListCard listCardNotes={listNotes} handleListDelete={handleDelete} />
     )
 }
