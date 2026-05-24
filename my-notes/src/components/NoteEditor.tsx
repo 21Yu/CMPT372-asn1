@@ -2,7 +2,12 @@ import React, { useState } from "react"
 import type { Note } from "../model/Note";
 import { useRef } from "react";
 
-export default function NoteEditor() {
+type NoteEditorProps = {
+    editorNotes: Note[];
+    setNotesEditor: (data: Note[]) => void;
+}
+
+export default function NoteEditor({ editorNotes, setNotesEditor } : NoteEditorProps) {
     const [formData, setFormData] = useState<Note>({
         id: 0,
         title: "",
@@ -29,7 +34,8 @@ export default function NoteEditor() {
             createdAt: new Date().toISOString()
         }
 
-        console.log(newNote);
+        setNotesEditor([...editorNotes, newNote])
+        
         refId.current += 1;
 
         setFormData({ id: 0, title: "", body: "", createdAt: "" });
